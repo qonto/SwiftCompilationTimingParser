@@ -233,9 +233,9 @@ private extension Regex where Output == (Substring, Substring, Substring, Substr
         var parsed: [ParsedTiming] = []
         for line in text {
             guard let match = try wholeMatch(in: line) else { continue }
-            guard let duration = Float(match.1), duration >= threshold else { continue }
+            guard let ms = Float(match.1), ms >= threshold else { continue }
 
-            parsed.append(ParsedTiming(duration: duration, location: String(match.2), symbol: String(match.3)))
+            parsed.append(ParsedTiming(ms: ms, location: String(match.2), symbol: String(match.3)))
         }
         return parsed.isEmpty ? nil : parsed
     }
@@ -248,11 +248,10 @@ private extension Array where Element == ParsedTiming {
             var toAdd = timing
             let key = timing.location + timing.symbol
             if let existing = groups[key] {
-                toAdd = ParsedTiming(duration: existing.duration + timing.duration, location: timing.location, symbol: timing.symbol)
+                toAdd = ParsedTiming(ms: existing.ms + timing.ms, location: timing.location, symbol: timing.symbol)
             }
             groups[key] = toAdd
         }
         self = Array(groups.values)
     }
 }
-

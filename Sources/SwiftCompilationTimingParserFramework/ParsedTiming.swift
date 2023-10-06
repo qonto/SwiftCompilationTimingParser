@@ -25,12 +25,12 @@
 import Foundation
 
 open class ParsedTiming: Codable {
-    public let duration: Float
+    public let ms: Float
     public let location: String
     public let symbol: String
 
-    public init(duration: Float, location: String, symbol: String) {
-        self.duration = duration
+    public init(ms: Float, location: String, symbol: String) {
+        self.ms = ms
         self.location = location
         self.symbol = symbol
     }
