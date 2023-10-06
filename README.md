@@ -55,12 +55,12 @@ In case `--derived-data-path` is specified instead of `--xcodebuild-log-path`, t
 [
   {
     "symbol" : "instance method increase(_:count:file:line:)",
-    "duration" : 2.119999885559082,
+    "ms" : 2.119999885559082,
     "location" : "/MyProject/Counter.swift:192:17"
   },
   {
     "symbol" : "instance method perform(_:)",
-    "duration" : 0.55000001192092896,
+    "ms" : 0.55000001192092896,
     "location" : "/MyProject/Counter.swift:115:17"
   },
   ...
