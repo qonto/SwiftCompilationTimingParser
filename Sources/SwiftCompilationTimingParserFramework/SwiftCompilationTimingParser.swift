@@ -132,7 +132,15 @@ public class SwiftCompilationTimingParser {
     private func saveActivityLogIfNeeded(_ activityLog: XCLogParser.IDEActivityLog) throws {
         guard let xcactivityLogOutputPath = configuration.xcactivityLogOutputPath else { return }
         let output = XCLogParser.FileOutput(path: xcactivityLogOutputPath)
-        try output.write(report: activityLog)
+        let logReporter = JsonReporter()
+        let buildParser = ParserBuildSteps(
+            machineName: nil,
+            omitWarningsDetails: false,
+            omitNotesDetails: true,
+            truncLargeIssues: false
+        )
+        let buildSteps = try buildParser.parse(activityLog: activityLog)
+        try logReporter.report(build: buildSteps, output: output, rootOutput: "")
     }
 
     private func processRawLog(log: Data) throws -> [ParsedTiming] {
