@@ -128,7 +128,7 @@ public class SwiftCompilationTimingParser {
     private func saveFiles(parsedTimings: [ParsedTiming]) throws {
         let jsonEncoder = JSONEncoder()
         if configuration.prettyOutputFormating {
-            jsonEncoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
+            jsonEncoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes, .sortedKeys]
         }
         let data = try jsonEncoder.encode(parsedTimings)
         try data.write(to: URL(filePath: configuration.outputPath))
