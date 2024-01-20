@@ -52,8 +52,9 @@ public class SwiftCompilationTimingParser {
         let xcodebuildLogPath: String?
         let derivedDataPath: String?
         let rootPath: String
+        let prettyOutputFormating: Bool
 
-        public init(xcactivityLogOutputPath: String? = nil, outputPath: String, threshold: Float, targetName: String, filteredPath: String? = nil, xcodebuildLogPath: String? = nil, derivedDataPath: String? = nil, rootPath: String) {
+        public init(xcactivityLogOutputPath: String? = nil, outputPath: String, threshold: Float, targetName: String, filteredPath: String? = nil, xcodebuildLogPath: String? = nil, derivedDataPath: String? = nil, rootPath: String, prettyOutputFormating: Bool) {
             self.xcactivityLogOutputPath = xcactivityLogOutputPath
             self.outputPath = outputPath
             self.threshold = threshold
@@ -62,6 +63,7 @@ public class SwiftCompilationTimingParser {
             self.xcodebuildLogPath = xcodebuildLogPath
             self.derivedDataPath = derivedDataPath
             self.rootPath = rootPath
+            self.prettyOutputFormating = prettyOutputFormating
         }
     }
 
@@ -125,6 +127,9 @@ public class SwiftCompilationTimingParser {
 
     private func saveFiles(parsedTimings: [ParsedTiming]) throws {
         let jsonEncoder = JSONEncoder()
+        if configuration.prettyOutputFormating {
+            jsonEncoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
+        }
         let data = try jsonEncoder.encode(parsedTimings)
         try data.write(to: URL(filePath: configuration.outputPath))
     }

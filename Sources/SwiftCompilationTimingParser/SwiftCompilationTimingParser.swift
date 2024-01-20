@@ -39,6 +39,7 @@ struct SwiftCompilationTimingParser: AsyncParsableCommand {
         case xcactivityLogOutputPath
         case xcodebuildLogPath
         case shouldEnableGrouping
+        case prettyOutputFormating
     }
 
     @Option(name: .customLong("root-path"), help: "Absolute path to the project's root folder. Used for filtering purpose to cut out the username and other non-relevant paths when logs are parsed")
@@ -71,8 +72,11 @@ struct SwiftCompilationTimingParser: AsyncParsableCommand {
     @Flag(name: .customLong("enable-grouping"), help: "(Optional) If specified, symbols are grouped by location and symbol before being written to `--output-path`")
     var shouldEnableGrouping = false
 
+    @Flag(name: .customLong("pretty-output"), help: "(Optional) If specified, the output JSON will be formatted with indentation and line breaks for improved readability")
+    var prettyOutputFormating = false
+    
     func run() async throws {
-        let configuration = SwiftCompilationTimingParserFramework.SwiftCompilationTimingParser.Configuration(xcactivityLogOutputPath: xcactivityLogOutputPath, outputPath: outputPath, threshold: threshold, targetName: targetName, filteredPath: filteredPath, xcodebuildLogPath: xcodebuildLogPath, derivedDataPath: derivedDataPath, rootPath: rootPath)
+        let configuration = SwiftCompilationTimingParserFramework.SwiftCompilationTimingParser.Configuration(xcactivityLogOutputPath: xcactivityLogOutputPath, outputPath: outputPath, threshold: threshold, targetName: targetName, filteredPath: filteredPath, xcodebuildLogPath: xcodebuildLogPath, derivedDataPath: derivedDataPath, rootPath: rootPath, prettyOutputFormating: prettyOutputFormating)
         try await SwiftCompilationTimingParserFramework.SwiftCompilationTimingParser(configuration: configuration).run()
     }
 }
